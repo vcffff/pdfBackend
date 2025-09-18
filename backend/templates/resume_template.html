@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ name }} - Professional Resume</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom, #f8fafc, #e2e8f0);
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hover-scale:hover {
+      transform: scale(1.02);
+      transition: transform 0.2s ease-in-out;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 3px;
+      background: #3b82f6;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body class="min-h-screen py-10 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-xl p-8 fade-in">
+
+    <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-8 hover-scale">
+      {% if profile_image %}
+        <img src="data:image/png;base64,{{ profile_image }}" alt="Profile Photo" 
+             class="w-32 h-32 rounded-full border-4 border-blue-100 object-cover" />
+      {% else %}
+        <div class="w-32 h-32 rounded-full bg-gray-200 flex items-center justify-center">
+          <svg class="w-16 h-16 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+          </svg>
+        </div>
+      {% endif %}
+      <div class="text-center sm:text-left">
+        <h1 class="text-3xl font-bold text-gray-900">{{ name }}</h1>
+        <p class="text-lg font-semibold text-blue-600">{{ title }}</p>
+      </div>
+    </div>
+
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 section-title">Summary</h2>
+      <p class="mt-4 text-gray-600 leading-relaxed">{{ summary }}</p>
+    </div>
+
+    {% if skills %}
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 section-title">Skills</h2>
+      <ul class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {% for skill in skills %}
+          <li class="text-gray-600 flex items-center">
+            <svg class="w-5 h-5 text-blue-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" fill-rule="evenodd" />
+            </svg>
+            {{ skill }}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+   {% if projects %}
+<div class="mb-8">
+  <h2 class="text-xl font-semibold text-gray-800 section-title">Projects</h2>
+  <div class="mt-4 space-y-4">
+    {% for project in projects %}
+      <div class="p-4 bg-gray-50 rounded-lg hover-scale">
+        <h3 class="text-lg font-semibold text-gray-900">{{ project.title }}</h3>
+        <p class="text-gray-600 mt-1">{{ project.description }}</p>
+        <div class="mt-2 space-x-4">
+          {% if project.github %}
+            <a href="{{ project.github }}" target="_blank" class="text-blue-600 underline">GitHub</a>
+          {% endif %}
+          {% if project.linkedin %}
+            <a href="{{ project.linkedin }}" target="_blank" class="text-blue-600 underline">LinkedIn</a>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+  </div>
+</body>
+</html>
