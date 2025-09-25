@@ -20,7 +20,9 @@ if platform.system() == "Windows":
         wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
     )
 else:
-    PDFKIT_CONFIG = pdfkit.configuration()
+   PDFKIT_CONFIG = pdfkit.configuration(
+        wkhtmltopdf="/usr/bin/wkhtmltopdf"
+    )
 
 SQLALCHEMY_DATABASE_URL=os.getenv('SQL_ALCHEMY_URL') 
 
