@@ -1,3 +1,4 @@
+import platform
 from fastapi import FastAPI, Form, UploadFile, File, Query
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,6 +14,12 @@ import asyncpg
 from dotenv import load_dotenv
 
 load_dotenv()
+if platform.system() == "Windows":
+    PDFKIT_CONFIG = pdfkit.configuration(
+        wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+    )
+else:
+    PDFKIT_CONFIG = pdfkit.configuration()
 
 SQLALCHEMY_DATABASE_URL=os.getenv('SQL_ALCHEMY_URL') 
 
